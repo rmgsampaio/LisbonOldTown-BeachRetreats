@@ -1,0 +1,90 @@
+/* Estilo base do cabeçalho */
+.topo {
+  background-color: #f8f4ee;  /* Cor de fundo */
+  color: #1c3a4f;  /* Cor do texto */
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;  /* Animação suave para esconder e mostrar */
+}
+
+/* Logo */
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 90px;  /* Ajuste do tamanho do logo */
+  height: auto;
+  margin-right: 10px;  /* Espaço entre o logo e o texto */
+}
+
+/* Menu principal */
+.topo nav ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.topo nav ul li {
+  position: relative;
+}
+
+.topo nav ul li a,
+.menu-title {
+  color: #1c3a4f;  /* Cor do texto */
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.topo nav ul li a:hover,
+.menu-title:hover {
+  color: #caa766;  /* Cor de hover */
+}
+
+/* Dropdown */
+.dropdown-content {
+  display: none !important;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f8f4ee;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 1001;
+  flex-direction: column;
+}
+
+.dropdown-content li a {
+  display: block;
+  padding: 10px 14px;
+  color: white;
+  text-decoration: none;
+}
+
+/* Mostrar dropdown apenas com hover */
+.dropdown:hover .dropdown-content {
+  display: flex !important;
+}
+
+/* Esconder o header ao rolar para baixo */
+.topo.hide {
+  transform: translateY(-100%);  /* Esconde o header para cima */
+}
+
+/* Mostrar o header ao rolar para cima */
+.topo.show {
+  transform: translateY(0);  /* Exibe o header */
+}

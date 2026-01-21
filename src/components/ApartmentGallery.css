@@ -1,0 +1,68 @@
+.gallery-container {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 0 20px; /* margem lateral maior */
+}
+
+.gallery-image {
+  width: 59%;
+  max-height: 550px;
+  height: auto;
+  object-fit: cover;
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: block; /* garante que respeita margin auto */
+  margin: 0 auto;  /* centra horizontalmente */
+}
+
+
+.thumbnails {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.thumbnail {
+  width: 70px;
+  height: 50px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.thumbnail.active {
+  border-color: #caa766;
+  transform: scale(1.05);
+}
+
+/* Botões de navegação */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color:#caa766;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.nav:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.nav.prev {
+  left: 16%; /* encostado à imagem */
+}
+
+.nav.next {
+  right: 16%;
+}

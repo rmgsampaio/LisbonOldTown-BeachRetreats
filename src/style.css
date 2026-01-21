@@ -1,0 +1,85 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* Layout dos apartamentos */
+.apartamentos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 120px 30px 30px;
+  gap: 40px;
+}
+
+.apartamento {
+  background-color: white;
+  border-radius: 12px;
+  width: 45%;
+  max-width: 650px;
+  padding: 0 0 20px;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.apartamento:hover {
+  transform: translateY(-5px);
+}
+
+.apartamento img {
+  width: 100%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  height: auto;
+  object-fit: cover;
+}
+
+.apartamento h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 20px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 20px 10px;
+}
+
+.tags span {
+  background-color: #eee;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.info {
+  margin: 0 20px 10px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.seta {
+  text-align: right;
+  margin: 0 20px;
+  font-size: 1.5rem;
+  color: #444;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .apartamento {
+    width: 90%;
+  }
+}
