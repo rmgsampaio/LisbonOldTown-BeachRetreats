@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import { DateRange } from 'react-date-range';
-import { format, eachDayOfInterval, getMonth } from 'date-fns';
+import { format, eachDayOfInterval } from 'date-fns';
+
 import { pt } from 'date-fns/locale';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -82,9 +84,11 @@ function AvailabilitySidebar({ pricingConfig }) {
 
     setMessageBody(encodeURIComponent(summaryText));
     calculatePrice();
-  }, [selection, numPeople, validDates]);
+  }, [selection, numPeople, validDates, calculatePrice]);
 
-  const calculatePrice = () => {
+
+  const calculatePrice = useCallback(() => {
+
     const { startDate, endDate } = selection[0];
     const nights = calculateNights();
     if (nights < 2) return '⚠️ Mínimo 2 noites';
@@ -125,7 +129,23 @@ function AvailabilitySidebar({ pricingConfig }) {
 
     const finalPrice = Math.round(total + CLEANING_FEE);
     setFinalTotal(finalPrice);
-  };
+  }, [
+  selection,
+  numPeople,
+  PRICE_LOW,
+  PRICE_HIGH,
+  CLEANING_FEE,
+  PROMO_WEEK_LOW,
+  PROMO_WEEK_HIGH,
+  PROMO_MONTH_LOW,
+  PROMO_MONTH_HIGH,
+  DAYS_IN_WEEK,
+  DAYS_IN_MONTH,
+  EXTRA_PERSON_3,
+  EXTRA_PERSON_4,
+  isHighSeason
+]);
+
 
   const renderDetails = () => {
     const { startDate, endDate } = selection[0];

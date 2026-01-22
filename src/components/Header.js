@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import { Link } from 'react-router-dom'; // Importa o Link do react-router-dom
 import './Header.css';
 
 function Header() {
   const [showHeader, setShowHeader] = useState(true);
-  let lastScrollY = 0; // Controla a posição do scroll
+  const lastScrollY = React.useRef(0);
+
 
   // Função para controlar o comportamento do scroll
-  const handleScroll = () => {
-    if (window.scrollY > lastScrollY) {
+  const handleScroll = useCallback(() => {
+
+    if (window.scrollY > lastScrollY.current) {
       setShowHeader(false);  // Esconde o header quando rola para baixo
     } else {
       setShowHeader(true);  // Mostra o header quando rola para cima
     }
-    lastScrollY = window.scrollY; // Atualiza a última posição do scroll
-  };
+    lastScrollY.current = window.scrollY; // Atualiza a última posição do scroll
+  }, []);
+
 
   // Adiciona um listener de scroll quando o componente monta
   useEffect(() => {
@@ -24,7 +28,8 @@ function Header() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
+
 
   return (
     <header className={`topo ${showHeader ? 'show' : 'hide'}`}>
