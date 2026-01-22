@@ -65,28 +65,6 @@ function AvailabilitySidebar({ pricingConfig }) {
     setValidDates(nights >= 2);
   };
 
-  useEffect(() => {
-    if (!validDates) return;
-
-    const { startDate, endDate } = selection[0];
-    const allDates = eachDayOfInterval({ start: startDate, end: new Date(endDate.getTime() - 1) });
-    const totalNights = allDates.length;
-
-    const summaryText = `Exmo. Senhor Nuno,\n\n` +
-      `Venho por este meio demonstrar o meu interesse em reservar o seu apartamento para as seguintes datas:\n` +
-      `Check-in: ${format(startDate, 'dd/MM/yyyy')}\n` +
-      `Check-out: ${format(endDate, 'dd/MM/yyyy')}\n` +
-      `Número de noites: ${totalNights}\n` +
-      `Número de pessoas: ${numPeople}\n\n` +
-      `Gostaria de confirmar se o alojamento se encontra disponível.\n` +
-      `Aguardo resposta com os próximos passos.\n\n` +
-      `Com os melhores cumprimentos,\n[O SEU NOME]\n[O SEU CONTACTO]`;
-
-    setMessageBody(encodeURIComponent(summaryText));
-    calculatePrice();
-  }, [selection, numPeople, validDates, calculatePrice]);
-
-
   const calculatePrice = useCallback(() => {
 
     const { startDate, endDate } = selection[0];
@@ -129,9 +107,10 @@ function AvailabilitySidebar({ pricingConfig }) {
 
     const finalPrice = Math.round(total + CLEANING_FEE);
     setFinalTotal(finalPrice);
-  }, [
+}, [
   selection,
   numPeople,
+  calculateNights,
   PRICE_LOW,
   PRICE_HIGH,
   CLEANING_FEE,
@@ -145,6 +124,33 @@ function AvailabilitySidebar({ pricingConfig }) {
   EXTRA_PERSON_4,
   isHighSeason
 ]);
+
+
+
+
+  useEffect(() => {
+    if (!validDates) return;
+
+    const { startDate, endDate } = selection[0];
+    const allDates = eachDayOfInterval({ start: startDate, end: new Date(endDate.getTime() - 1) });
+    const totalNights = allDates.length;
+
+    const summaryText = `Exmo. Senhor Nuno,\n\n` +
+      `Venho por este meio demonstrar o meu interesse em reservar o seu apartamento para as seguintes datas:\n` +
+      `Check-in: ${format(startDate, 'dd/MM/yyyy')}\n` +
+      `Check-out: ${format(endDate, 'dd/MM/yyyy')}\n` +
+      `Número de noites: ${totalNights}\n` +
+      `Número de pessoas: ${numPeople}\n\n` +
+      `Gostaria de confirmar se o alojamento se encontra disponível.\n` +
+      `Aguardo resposta com os próximos passos.\n\n` +
+      `Com os melhores cumprimentos,\n[O SEU NOME]\n[O SEU CONTACTO]`;
+
+    setMessageBody(encodeURIComponent(summaryText));
+    calculatePrice();
+  }, [selection, numPeople, validDates, calculatePrice]);
+
+
+
 
 
   const renderDetails = () => {
