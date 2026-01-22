@@ -52,11 +52,12 @@ function AvailabilitySidebar({ pricingConfig }) {
     return dates;
   });
 
-  const calculateNights = () => {
-    const { startDate, endDate } = selection[0];
-    const diffTime = endDate - startDate;
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  };
+  const calculateNights = useCallback(() => {
+  const { startDate, endDate } = selection[0];
+  const diffTime = endDate - startDate;
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}, [selection]);
+
 
   const handleSelect = (ranges) => {
     const newSelection = ranges.selection;
