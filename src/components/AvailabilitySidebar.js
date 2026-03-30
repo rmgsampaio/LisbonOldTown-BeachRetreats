@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { DateRange } from 'react-date-range';
 import { format, eachDayOfInterval } from 'date-fns';
 import { pt } from 'date-fns/locale';
@@ -34,7 +34,6 @@ function AvailabilitySidebar({ pricingConfig }) {
   const [showSummary, setShowSummary] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
-  // Memoize disabled dates
   const disabledDates = useMemo(() => {
     return unavailableRanges.flatMap(range => {
       const start = typeof range.start === 'string' ? new Date(range.start) : new Date(range.startDate);
@@ -61,7 +60,6 @@ function AvailabilitySidebar({ pricingConfig }) {
     setValidDates(nights >= 2);
   };
 
-  // Unified price calculation logic
   const computePrice = useCallback(() => {
     const { startDate, endDate } = selection[0];
     const nights = calculateNights();
@@ -71,7 +69,6 @@ function AvailabilitySidebar({ pricingConfig }) {
     let total = 0;
     let remainingDates = [...allDates];
 
-    // Full months
     const fullMonths = Math.floor(remainingDates.length / DAYS_IN_MONTH);
     const monthBlockDates = remainingDates.slice(0, fullMonths * DAYS_IN_MONTH);
     const monthHigh = monthBlockDates.filter(d => isHighSeason(d)).length;
@@ -80,7 +77,6 @@ function AvailabilitySidebar({ pricingConfig }) {
     if (fullMonths > 0) total += monthTotal;
     remainingDates = remainingDates.slice(fullMonths * DAYS_IN_MONTH);
 
-    // Full weeks
     const fullWeeks = Math.floor(remainingDates.length / DAYS_IN_WEEK);
     const weekBlockDates = remainingDates.slice(0, fullWeeks * DAYS_IN_WEEK);
     const weekHigh = weekBlockDates.filter(d => isHighSeason(d)).length;
@@ -89,7 +85,6 @@ function AvailabilitySidebar({ pricingConfig }) {
     total += weekTotal;
     remainingDates = remainingDates.slice(fullWeeks * DAYS_IN_WEEK);
 
-    // Remaining days
     const extraDays = remainingDates.map(d => ({
       date: d,
       price: isHighSeason(d) ? PRICE_HIGH : PRICE_LOW,
@@ -98,7 +93,6 @@ function AvailabilitySidebar({ pricingConfig }) {
     const extrasTotal = extraDays.reduce((acc, d) => acc + d.price, 0);
     total += extrasTotal;
 
-    // Extra people
     const extraPerNight = (numPeople >= 4 ? EXTRA_PERSON_4 : 0) + (numPeople >= 3 ? EXTRA_PERSON_3 : 0);
     const totalExtrasPeople = extraPerNight * nights;
     total += totalExtrasPeople;
@@ -112,15 +106,26 @@ function AvailabilitySidebar({ pricingConfig }) {
       extraDays, extrasTotal,
       extraPerNight, totalExtrasPeople,
     };
-  }, [selection, numPeople, calculateNights, PRICE_LOW, PRICE_HIGH, CLEANING_FEE,
-    PROMO_WEEK_LOW, PROMO_WEEK_HIGH, PROMO_MONTH_LOW, PROMO_MONTH_HIGH,
-    DAYS_IN_WEEK, DAYS_IN_MONTH, EXTRA_PERSON_3, EXTRA_PERSON_4]);
+  }, [
+    selection,
+    numPeople,
+    calculateNights,
+    PRICE_LOW,
+    PRICE_HIGH,
+    CLEANING_FEE,
+    PROMO_WEEK_LOW,
+    PROMO_WEEK_HIGH,
+    PROMO_MONTH_LOW,
+    PROMO_MONTH_HIGH,
+    DAYS_IN_WEEK,
+    DAYS_IN_MONTH,
+    EXTRA_PERSON_3,
+    EXTRA_PERSON_4
+  ]);
 
-  // Memoize price result
   const priceResult = useMemo(() => computePrice(), [computePrice]);
   const finalTotal = priceResult?.finalTotal || 0;
 
-  // Generate message body
   const messageBody = useMemo(() => {
     if (!validDates || !priceResult) return '';
     const { startDate, endDate } = selection[0];
@@ -169,7 +174,6 @@ function AvailabilitySidebar({ pricingConfig }) {
           </span>
         </div>
 
-        {/* People selector */}
         <div className="sidebar-people">
           <span className="sidebar-label">{t('sim.numPeople')}:</span>
           <div className="people-controls">
@@ -200,7 +204,6 @@ function AvailabilitySidebar({ pricingConfig }) {
         </button>
       )}
 
-      {/* Summary Modal */}
       <Modal isOpen={showSummary} onClose={() => setShowSummary(false)} title={t('sim.summary')}>
         <div className="sim-summary">
           <div className="sim-row">
@@ -237,14 +240,19 @@ function AvailabilitySidebar({ pricingConfig }) {
             >
               <MessageCircle size={18} /> {t('sim.whatsappBtn')}
             </a>
-            <button className="sim-btn sim-btn-details" onClick={() => { setShowSummary(false); setShowDetails(true); }}>
+            <button
+              className="sim-btn sim-btn-details"
+              onClick={() => {
+                setShowSummary(false);
+                setShowDetails(true);
+              }}
+            >
               <FileText size={18} /> {t('sim.viewDetails')}
             </button>
           </div>
         </div>
       </Modal>
 
-      {/* Details Modal */}
       <Modal isOpen={showDetails} onClose={() => setShowDetails(false)} title={t('sim.details')}>
         {priceResult && (
           <div className="sim-details">
@@ -277,7 +285,9 @@ function AvailabilitySidebar({ pricingConfig }) {
               </div>
             )}
             {priceResult.extraPerNight > 0 && (
-              <p>{t('sim.extraPerson')}: €{priceResult.extraPerNight}/{t('apt.perNight').replace('/', '')} × {priceResult.nights} = €{priceResult.totalExtrasPeople}</p>
+              <p>
+                {t('sim.extraPerson')}: €{priceResult.extraPerNight}/{t('apt.perNight').replace('/', '')} × {priceResult.nights} = €{priceResult.totalExtrasPeople}
+              </p>
             )}
             <p>{t('apt.cleaningFee')}: €{CLEANING_FEE}</p>
             <h4 className="sim-final-total">{t('sim.finalTotal')}: €{priceResult.finalTotal}</h4>
