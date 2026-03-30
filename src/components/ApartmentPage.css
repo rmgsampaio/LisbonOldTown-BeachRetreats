@@ -1,9 +1,110 @@
+/* ===== Gallery Section ===== */
+.gallery-fullwidth {
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
+
+.apartment-title {
+  margin-top: 30px;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1c3a4f;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+/* ===== Description Section ===== */
+.apartment-description {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 30px 0;
+}
+
+.apt-section-name {
+  font-size: 1.6rem;
+  color: #1c3a4f;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.apt-not-found {
+  text-align: center;
+  padding: 200px 20px;
+  color: #666;
+}
+
+/* ===== Amenities Highlights ===== */
+.amenities-highlights {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+  padding: 28px 20px;
+  margin: 30px 0;
+  border-bottom: 1px solid rgba(28, 58, 79, 0.08);
+  border-top: 1px solid rgba(28, 58, 79, 0.08);
+  background: #f8f4ee;
+  border-radius: 14px;
+}
+
+.amenity-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  transition: transform 0.2s ease;
+}
+
+.amenity-item:hover {
+  transform: scale(1.05);
+}
+
+.amenity-icon-svg {
+  color: #caa766;
+}
+
+.amenity-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1c3a4f;
+}
+
+.amenity-label {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+}
+
+/* ===== Description Text ===== */
+.description-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #444;
+  margin: 30px auto;
+  padding: 0;
+  max-width: 800px;
+  text-align: left;
+}
+
+.description-text::first-letter {
+  font-size: 2.2rem;
+  color: #1c3a4f;
+  float: left;
+  margin-right: 6px;
+  line-height: 0.85;
+  font-weight: 600;
+}
+
+/* ===== Main Layout ===== */
 .apartment-page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 140px 40px 40px; /* padding-top para compensar o header fixo */
+  padding: 40px;
   gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
@@ -11,75 +112,63 @@
 
 .apartment-main {
   flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.features-grid {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .apartment-sidebar {
   flex: 1;
-  max-width: 350px;
+  max-width: 380px;
   position: sticky;
-  top: 120px;
+  top: 100px;
 }
 
-.apartment-title {
-  margin-top: 145px;
-  margin-bottom: 24px;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1c1c1c;
-  text-align: center;
-}
-
-.gallery-section {
-  width: 100%;
-  max-width: 100%;
-  padding: 140px 40px 20px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Novo layout para a seção do mapa e locais próximos */
-.apartment-main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
-}
-
+/* ===== Map ===== */
 .map-container {
   flex: 1;
   max-width: 300px;
   margin-top: 20px;
-  border-radius: 8px;
-  display: flex;          /* Novo */
-  justify-content: center; /* Novo */
-  align-items: center;    /* Novo */
-  min-height: 200px;      /* Novo (ajuste conforme necessidade) */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-.map-container img {
+.map-image {
   width: 100%;
   height: auto;
   cursor: pointer;
-  border-radius: 8px;
-  object-fit: contain;    /* Novo - mantém proporções sem cortes */
+  display: block;
+  transition: transform 0.3s;
 }
 
-/* Estilo moderno para a tabela de preços */
+.map-container:hover .map-image {
+  transform: scale(1.02);
+}
+
+/* ===== Pricing Table ===== */
 .apartment-pricing {
-  margin-top: 40px;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 40px;
 }
 
 .apartment-pricing h3 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   color: #1c3a4f;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   text-align: center;
   position: relative;
-  padding-bottom: 15px;
+  padding-bottom: 14px;
 }
 
 .apartment-pricing h3::after {
@@ -88,450 +177,194 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
+  width: 60px;
   height: 3px;
-  background-color: #1c3a4f;
+  background: #caa766;
+  border-radius: 2px;
 }
 
 .apartment-pricing table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(28, 58, 79, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-.apartment-pricing table th,
-.apartment-pricing table td {
+.apartment-pricing th,
+.apartment-pricing td {
   padding: 16px;
   text-align: center;
   border: none;
 }
 
-.apartment-pricing table th {
-  background-color: #1c3a4f;
+.apartment-pricing th {
+  background: #1c3a4f;
   color: #f8f4ee;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.apartment-pricing table td {
-  background-color: #f8f4ee;
+.apartment-pricing td {
+  background: #fff;
   color: #1c3a4f;
   font-weight: 500;
-  border-bottom: 1px solid rgba(28, 58, 79, 0.1);
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.apartment-pricing table tr:last-child td {
-  border-bottom: none;
+.apartment-pricing tr:hover td {
+  background: #f8f4ee;
 }
 
-.apartment-pricing table tr:hover td {
-  background-color: rgba(28, 58, 79, 0.05);
-  transition: background-color 0.3s ease;
-}
-
+/* ===== Extra Guest & Cleaning Fee ===== */
 .extra-guest-pricing {
-  margin-top: 30px;
-  font-size: 1rem;
-  color: #1c3a4f;
-  background-color: #f8f4ee;
+  margin-top: 24px;
+  background: #f8f4ee;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(28, 58, 79, 0.05);
-}
-
-.extra-guest-pricing h4 {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  color: #1c3a4f;
-  font-weight: 600;
-  text-align: center;
+  border-radius: 10px;
 }
 
 .extra-guest-pricing ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 15px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
 .extra-guest-pricing li {
-  margin-bottom: 0;
-  font-size: 1rem;
-  background-color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(28, 58, 79, 0.1);
-  flex: 1;
-  min-width: 200px;
-  text-align: center;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .apartment-pricing table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .extra-guest-pricing ul {
-    flex-direction: column;
-  }
-
-  .extra-guest-pricing li {
-    min-width: 100%;
-  }
-}
-
-
-/* Estilo moderno para a taxa de limpeza */
-.cleaningfee-pricing {
-  margin: 40px 0;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #f8f4ee;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(28, 58, 79, 0.1);
-}
-
-.cleaningfee-pricing h3 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1c3a4f;
-  margin-bottom: 25px;
-  text-align: center;
-  position: relative;
-  padding-bottom: 15px;
-}
-
-.cleaningfee-pricing h3::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background-color: #1c3a4f;
-}
-
-.cleaningfee-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  gap: 30px;
-}
-
-.cleaningfee-details {
-  flex: 1;
-  min-width: 300px;
-}
-
-.cleaningfee-details p {
-  font-size: 1.1rem;
-  color: #1c3a4f;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.cleaningfee-highlight {
-  background-color: #1c3a4f;
-  color: #f8f4ee;
-  padding: 25px;
-  border-radius: 8px;
-  text-align: center;
-  flex: 0 1 300px;
-  box-shadow: 0 4px 8px rgba(28, 58, 79, 0.2);
-}
-
-.cleaningfee-highlight .fee-amount {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 10px 0;
-}
-
-.cleaningfee-highlight .fee-description {
-  font-size: 1rem;
-  opacity: 0.9;
-}
-
-.cleaningfee-notes {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px dashed rgba(28, 58, 79, 0.3);
-}
-
-.cleaningfee-notes ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.cleaningfee-notes li {
-  background-color: white;
-  padding: 12px 20px;
+  background: #fff;
+  padding: 10px 18px;
   border-radius: 6px;
   font-size: 0.95rem;
-  color: #1c3a4f;
-  box-shadow: 0 2px 4px rgba(28, 58, 79, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-.cleaningfee-notes li::before {
-  content: '•';
-  color: #1c3a4f;
-  font-weight: bold;
-  font-size: 1.2rem;
+.cleaningfee-pricing {
+  margin-top: 16px;
+  background: #f8f4ee;
+  padding: 16px 20px;
+  border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  .cleaningfee-content {
-    flex-direction: column;
-  }
-
-  .cleaningfee-details {
-    min-width: 100%;
-  }
-
-  .cleaningfee-notes ul {
-    flex-direction: column;
-  }
-}
-
-/* Para garantir que a imagem não sobreponha o conteúdo em telas menores */
-@media (max-width: 768px) {
-  .apartment-page {
-    flex-direction: column;
-    gap: 20px;
-    padding: 100px 20px 20px; /* Menos padding no topo em telas pequenas */
-  }
-
-  .apartment-main {
-    flex: 1;
-    width: 100%;
-  }
-
-  .apartment-sidebar {
-    max-width: 100%;
-    position: static; /* Não precisa mais de sticky */
-  }
-
-  .map-container {
-    max-width: 100%;
-    margin-top: 20px;
-  }
-}
-/* Estilo moderno para política de pagamentos */
+/* ===== Payment Policy ===== */
 .payment-policy {
-  background-color: #f8f4ee;
-  padding: 30px;
-  margin-top: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(28, 58, 79, 0.1);
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  background: #f8f4ee;
+  border-radius: 14px;
   border-left: 4px solid #1c3a4f;
 }
 
 .payment-policy h3 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #1c3a4f;
-  margin-bottom: 25px;
-  position: relative;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
   font-weight: 600;
 }
 
-.payment-policy h3::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background-color: #1c3a4f;
-}
-
-.payment-schedule, .cancellation-policy, .security-deposit {
-  margin-bottom: 25px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+.payment-schedule,
+.cancellation-policy {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s;
 }
 
-.payment-schedule:hover, .cancellation-policy:hover, .security-deposit:hover {
-  transform: translateY(-3px);
+.payment-schedule:hover,
+.cancellation-policy:hover {
+  transform: translateY(-2px);
 }
 
-.payment-schedule h4, .cancellation-policy h4, .security-deposit h4 {
-  font-size: 1.3rem;
+.payment-schedule p,
+.cancellation-policy p {
   color: #1c3a4f;
-  margin-bottom: 10px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  line-height: 1.6;
+  margin: 4px 0;
 }
 
-.payment-schedule h4::before,
-.cancellation-policy h4::before,
-.security-deposit h4::before {
-  content: '•';
-  color: #1c3a4f;
-  font-size: 1.8rem;
-}
-
-.payment-schedule p, .cancellation-policy p, .security-deposit p {
-  font-size: 1.05rem;
-  color: #1c3a4f;
-  line-height: 1.7;
-}
-
-/* Estilo moderno para sobre o anfitrião */
+/* ===== About Host ===== */
 .about-host {
-  background-color: #f8f4ee;
-  padding: 30px;
-  margin-top: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(28, 58, 79, 0.1);
-  border-right: 4px solid #1c3a4f;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  background: #f8f4ee;
+  border-radius: 14px;
+  border-right: 4px solid #caa766;
 }
 
 .about-host h3 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #1c3a4f;
-  margin-bottom: 25px;
-  position: relative;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
   font-weight: 600;
 }
 
-.about-host h3::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 60px;
-  height: 3px;
-  background-color: #1c3a4f;
-}
-
-.host-info, .contact-info {
-  margin-bottom: 25px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+.host-info,
+.contact-info {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
 }
 
-.host-info p, .contact-info p {
-  font-size: 1.05rem;
+.host-info p,
+.contact-info p {
   color: #1c3a4f;
-  line-height: 1.7;
+  line-height: 1.6;
+  margin: 4px 0;
 }
 
-.contact-info h4 {
-  font-size: 1.3rem;
-  color: #1c3a4f;
-  margin-bottom: 10px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .apartment-page {
+    flex-direction: column;
+    padding: 20px;
+    gap: 24px;
+  }
+
+  .apartment-sidebar {
+    max-width: 100%;
+    position: static;
+  }
+
+  .apartment-main {
+    flex-direction: column;
+  }
+
+  .map-container {
+    max-width: 100%;
+  }
+
+  .apartment-pricing,
+  .payment-policy,
+  .about-host {
+    margin: 24px 16px;
+    padding: 24px 20px;
+  }
 }
 
-.contact-info h4::before {
-  content: '✉';
-  font-size: 1.3rem;
-}
+@media (max-width: 600px) {
+  .apartment-title {
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
 
-/* Estilo moderno para destaques de comodidades */
-.amenities-highlights {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 40px;
-  padding: 30px 0;
-  margin: 40px 0;
-  border-bottom: 1px solid rgba(28, 58, 79, 0.1);
-  border-top: 1px solid rgba(28, 58, 79, 0.1);
-  background-color: #f8f4ee;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(28, 58, 79, 0.05);
-}
-
-.amenity-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  min-width: 120px;
-  transition: transform 0.3s ease;
-}
-
-.amenity-item:hover {
-  transform: scale(1.05);
-}
-
-.amenity-icon {
-  font-size: 28px;
-  color: #1c3a4f;
-}
-
-.amenity-value {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1c3a4f;
-}
-
-.amenity-label {
-  font-size: 16px;
-  color: #1c3a4f;
-  text-align: center;
-  opacity: 0.9;
-}
-
-/* Estilo moderno para texto de descrição */
-.description-text {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #1c3a4f;
-  margin: 40px auto;
-  padding: 0 30px;
-  max-width: 900px;
-  text-align: left;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.description-text::first-letter {
-  font-size: 2.5rem;
-  color: #1c3a4f;
-  float: left;
-  margin-right: 8px;
-  line-height: 0.8;
-  font-weight: 600;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .payment-policy, .about-host {
-    padding: 25px 20px;
+  .gallery-fullwidth {
+    padding-top: 80px;
   }
 
   .amenities-highlights {
     flex-wrap: wrap;
-    gap: 25px;
-    padding: 25px 20px;
+    gap: 20px;
+    padding: 20px;
   }
 
   .amenity-item {
@@ -539,21 +372,8 @@
   }
 
   .description-text {
-    font-size: 1rem;
-    padding: 0 20px;
-    margin: 30px auto;
-  }
-
-  .payment-schedule h4,
-  .cancellation-policy h4,
-  .security-deposit h4,
-  .contact-info h4 {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .amenity-item {
-    min-width: 100%;
+    font-size: 0.95rem;
+    padding: 0;
+    margin: 20px 0;
   }
 }

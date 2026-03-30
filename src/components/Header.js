@@ -1,56 +1,85 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
-import { Link } from 'react-router-dom'; // Importa o Link do react-router-dom
+import { Link } from 'react-router-dom';
+import { Menu, X, Globe, ChevronDown } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 import './Header.css';
 
 function Header() {
+  const { t, language, toggleLanguage } = useLanguage();
   const [showHeader, setShowHeader] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const lastScrollY = React.useRef(0);
 
-
-  // Função para controlar o comportamento do scroll
   const handleScroll = useCallback(() => {
-
-    if (window.scrollY > lastScrollY.current) {
-      setShowHeader(false);  // Esconde o header quando rola para baixo
+    if (mobileMenuOpen) return;
+    if (window.scrollY > lastScrollY.current && window.scrollY > 80) {
+      setShowHeader(false);
     } else {
-      setShowHeader(true);  // Mostra o header quando rola para cima
+      setShowHeader(true);
     }
-    lastScrollY.current = window.scrollY; // Atualiza a última posição do scroll
-  }, []);
+    lastScrollY.current = window.scrollY;
+  }, [mobileMenuOpen]);
 
-
-  // Adiciona um listener de scroll quando o componente monta
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    // Limpa o listener quando o componente desmonta
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  // Close mobile menu on route change (link click)
+  const closeMobile = () => setMobileMenuOpen(false);
+
+  // Prevent scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
 
   return (
     <header className={`topo ${showHeader ? 'show' : 'hide'}`}>
       <div className="logo">
-        {/* Link que leva à página inicial ao clicar no logo ou texto */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#1c3a4f' }}>
+        <Link to="/" onClick={closeMobile}>
           <img src="/imagens/Logo Site_FOTO.png" alt="Logo Lisbon Old Town & Beach Retreats" className="logo-img" />
-          Lisbon Old Town & Beach Retreats
+          <span className="logo-text">Lisbon Old Town & Beach Retreats</span>
         </Link>
       </div>
-      <nav>
+
+      {/* Hamburger button */}
+      <button
+        className="hamburger-btn"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label="Toggle menu"
+        aria-expanded={mobileMenuOpen}
+      >
+        {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+      </button>
+
+      {/* Mobile overlay */}
+      {mobileMenuOpen && <div className="mobile-overlay" onClick={closeMobile} />}
+
+      {/* Navigation */}
+      <nav className={`nav-menu ${mobileMenuOpen ? 'nav-open' : ''}`}>
         <ul>
           <li className="dropdown">
-            <span className="menu-title">Apartamentos ▾</span>
+            <span className="menu-title">
+              {t('nav.apartments')} <ChevronDown size={16} className="chevron-icon" />
+            </span>
             <ul className="dropdown-content">
-              <li><a href="/alfama">Alfama</a></li>
-              <li><a href="/sesimbra">Sesimbra</a></li>
+              <li><Link to="/alfama" onClick={closeMobile}>Alfama</Link></li>
+              <li><Link to="/sesimbra" onClick={closeMobile}>Sesimbra</Link></li>
             </ul>
           </li>
-          <li><a href="/contactos">Contactos</a></li>
-         
+          <li><Link to="/atividades" onClick={closeMobile}>{t('nav.activities')}</Link></li>
+          <li><Link to="/contactos" onClick={closeMobile}>{t('nav.contacts')}</Link></li>
+          <li>
+            <button className="lang-toggle" onClick={toggleLanguage} aria-label="Change language">
+              <Globe size={18} />
+              <span>{language === 'pt' ? 'EN' : 'PT'}</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </header>

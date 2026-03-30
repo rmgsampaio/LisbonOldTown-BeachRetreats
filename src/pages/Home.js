@@ -1,52 +1,65 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { getAllApartments } from '../data/apartments';
 import Header from '../components/Header';
-import Footer from '../components/Footer'; // <-- import do componente Footer
+import Footer from '../components/Footer';
+import Reviews from '../components/Reviews';
 import '../style.css';
 
 function Home() {
+  const { t, localized } = useLanguage();
+  const apartments = getAllApartments();
+
   return (
     <>
       <Header />
-      <main className="apartamentos-container">
-        <a href="/alfama" className="apartamento">
-          <img src="/imagens/alfamaApartamento/sala1.jpg" alt="Apartamento em Alfama" />
-          <h2>Apartamento 1 quarto - Alfama, Lisboa</h2>
-          <div className="tags">
-            <span>Varanda</span>
-            <span>Cozinha equipada</span>
-            <span>Perto do rio</span>
-            <span>Centro histórico</span>
-          </div>
-          <div className="info">
-            <p>📍 Alfama, Lisboa</p>
-            <p>🏠 1 quarto</p>
-          </div>
-          <span className="seta">➔</span>
-        </a>
 
-        <a href="/sesimbra" className="apartamento">
-          <img src="/imagens/sesimbraApartamento/quartoFake.jpeg" alt="Apartamento em Sesimbra" />
-          <h2>Apartamento 2 quartos - Sesimbra, Setúbal</h2>
-          <div className="tags">
-            <span>Varanda</span>
-            <span>Cozinha equipada</span>
-            <span>Ar condicionado</span>
-            <span>Piscina aquecida</span>
-            <span>Rooftop</span>
-            <span>Jardim</span>
-            <span>Estacionamento com carregamento</span>
-            <span>Elevador</span>
-            <span>Vista mar</span>
-            <span>Perto da praia</span>
-          </div>
-          <div className="info">
-            <p>📍 Sesimbra, Setúbal</p>
-            <p>🏠 2 quartos</p>
-          </div>
-          <span className="seta">➔</span>
-        </a>
+      {/* Hero subtitle */}
+      <main className="home-main">
+        <div className="home-hero">
+          <h1 className="home-title">{t('home.title')}</h1>
+          <p className="home-subtitle">{t('home.subtitle')}</p>
+        </div>
+
+        <div className="apartamentos-container">
+          {apartments.map((apt) => (
+            <Link to={`/${apt.slug}`} className="apartamento" key={apt.id}>
+              <img
+                src={apt.coverImage}
+                alt={apt.name}
+                loading="lazy"
+              />
+              <div className="apartamento-body">
+                <h2>{localized(apt.tagline)}</h2>
+                <div className="tags">
+                  {localized(apt.tags).map((tag, i) => (
+                    <span key={i}>{tag}</span>
+                  ))}
+                </div>
+                <div className="apartamento-footer">
+                  <div className="info">
+                    <p>📍 {localized(apt.location)}</p>
+                    <p>🏠 {apt.capacity.bedrooms} {apt.capacity.bedrooms === 1
+                      ? t('apt.bedroom')
+                      : t('apt.bedrooms')
+                    }</p>
+                  </div>
+                  <span className="view-link">
+                    {t('home.viewDetails')} <ArrowRight size={18} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </main>
-      <Footer /> {/* Componente reutilizável de rodapé */}
+
+      {/* Reviews Section */}
+      <Reviews />
+
+      <Footer />
     </>
   );
 }
